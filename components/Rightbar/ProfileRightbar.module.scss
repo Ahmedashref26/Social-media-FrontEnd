@@ -1,0 +1,52 @@
+.rightbar {
+  &Title {
+    margin-bottom: 20px;
+  }
+
+  &Title {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  &Info {
+    margin-bottom: 30px;
+  }
+
+  &InfoItem {
+    margin-bottom: 10px;
+  }
+
+  &InfoKey {
+    font-weight: 500;
+    margin-right: 15px;
+    color: #555;
+  }
+
+  &InfoValue {
+    font-weight: 300;
+  }
+
+  &Followings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    column-gap: 5px;
+    justify-items: center;
+  }
+
+  &Following {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+
+  &FollowingImg {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+  }
+}

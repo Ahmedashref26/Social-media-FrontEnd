@@ -1,0 +1,89 @@
+.login {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f0f2f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  &Wrapper {
+    width: 70%;
+    height: 70%;
+    display: flex;
+  }
+
+  &Left,
+  &Right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &Left {
+    padding: 0 30px;
+  }
+
+  &Logo {
+    font-size: 50px;
+    font-weight: 800;
+    color: $main-color;
+    margin-bottom: 10px;
+  }
+
+  &Desc {
+    font-size: 24px;
+  }
+
+  &Box {
+    height: 300px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &Input {
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    font-size: 18px;
+    padding-left: 20px;
+  }
+
+  &Input:focus {
+    outline: none;
+  }
+
+  &Button {
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: $main-color;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  &Forgot {
+    text-align: center;
+    color: $main-color;
+  }
+
+  &RegisterButton {
+    width: 60%;
+    align-self: center;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: #42b72a;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+}
