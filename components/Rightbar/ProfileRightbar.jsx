@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { followUser, getFriends } from '../../util/API';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import { Add, Remove } from '@mui/icons-material';
 import { reloadSession } from '../../util/reload';
 
@@ -13,12 +13,15 @@ const ProfileRightbar = ({ user }) => {
   const {
     data: { user: currentUser },
   } = useSession();
-  console.log('sessionUser:', currentUser);
-  console.log(followed);
+  // getSession().then((session) =>
+  //   console.log('getSession', session?.user?.followings)
+  // );
+
+  console.log('useSession:', currentUser.followings);
 
   useEffect(() => {
     setFollowed(currentUser.followings.includes(user?._id));
-  }, [currentUser, user._id]);
+  }, []);
 
   useEffect(() => {
     if (user._id) getFriends(user._id).then((friends) => setFriends(friends));
@@ -27,7 +30,7 @@ const ProfileRightbar = ({ user }) => {
   const handleFollow = (e) => {
     followUser(user._id, followed ? 'unfollow' : 'follow');
     setFollowed((pre) => !pre);
-    // reloadSession();
+    reloadSession();
   };
 
   const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;

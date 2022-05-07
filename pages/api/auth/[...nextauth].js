@@ -36,7 +36,6 @@ const AuthOptions = (req, res) => ({
       if (token?.user?._id) {
         const data = await getUser(token.user._id);
         if (data.status === 'success') {
-          console.log(data.user);
           session.user = data.user;
           token.user = data.user;
         }

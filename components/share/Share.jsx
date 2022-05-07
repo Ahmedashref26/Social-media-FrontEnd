@@ -4,6 +4,7 @@ import {
   Label,
   Room,
   EmojiEmotions,
+  Cancel,
   Upload,
 } from '@mui/icons-material';
 import Image from 'next/image';
@@ -62,6 +63,22 @@ const Share = ({ update }) => {
           />
         </div>
         <hr className={styles.shareHr} />
+        {file && (
+          <div className={styles.shareImgContainer}>
+            <div className={styles.shareImg}>
+              <Image
+                layout='fill'
+                objectFit='cover'
+                alt=''
+                src={URL.createObjectURL(file)}
+              />
+            </div>
+            <Cancel
+              className={styles.shareImgCancel}
+              onClick={() => setFile(null)}
+            />
+          </div>
+        )}
         <form onSubmit={submitHandler} className={styles.shareBottom}>
           <div className={styles.shareOptions}>
             <label htmlFor='file' className={styles.shareOption}>

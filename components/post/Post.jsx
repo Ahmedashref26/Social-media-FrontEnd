@@ -12,6 +12,7 @@ export default function Post({ post }) {
   const [isLiked, setIsLiked] = useState(false);
   const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
 
+  console.log(post.image);
   const {
     data: { user: currentUser },
   } = useSession();
