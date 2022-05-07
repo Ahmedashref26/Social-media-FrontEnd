@@ -1,8 +1,44 @@
 import styles from './share.module.scss';
-import { PermMedia, Label, Room, EmojiEmotions } from '@mui/icons-material';
+import {
+  PermMedia,
+  Label,
+  Room,
+  EmojiEmotions,
+  Upload,
+} from '@mui/icons-material';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+import { useRef, useState } from 'react';
+import { addPost, uploadFile } from '../../util/API';
 
-const Share = () => {
+const Share = ({ update }) => {
+  const { data: session } = useSession();
+  const { user } = session;
+  const [file, setFile] = useState();
+  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
+
+  const desc = useRef();
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const newPost = {
+      userId: user._id,
+      description: desc.current.value,
+    };
+
+    if (file) {
+      const data = new FormData();
+      data.append('file', file);
+
+      const filename = await uploadFile(data);
+      newPost.image = filename;
+    }
+
+    addPost(newPost);
+    desc.current.value = '';
+    update((pre) => !pre);
+  };
+
   return (
     <div className={styles.share}>
       <div className={styles.shareWrapper}>
@@ -11,22 +47,34 @@ const Share = () => {
             <Image
               layout='fill'
               objectFit='cover'
-              src='/assets/person/1.jpeg'
+              src={
+                user.profilePicture
+                  ? `${PF}/person/${user.profilePicture}`
+                  : `${PF}/person/noAvatar.webp`
+              }
               alt=''
             />
           </div>
           <input
-            placeholder="What's in your mind Safak?"
+            placeholder={`What's in your mind ${user.name}?`}
             className={styles.shareInput}
+            ref={desc}
           />
         </div>
         <hr className={styles.shareHr} />
-        <div className={styles.shareBottom}>
+        <form onSubmit={submitHandler} className={styles.shareBottom}>
           <div className={styles.shareOptions}>
-            <div className={styles.shareOption}>
+            <label htmlFor='file' className={styles.shareOption}>
               <PermMedia htmlColor='tomato' className={styles.shareIcon} />
               <span className={styles.shareOptionText}>Photo or Video</span>
-            </div>
+              <input
+                type='file'
+                style={{ display: 'none' }}
+                accept='.png, .jpeg, .jpg, .webp'
+                id='file'
+                onChange={(e) => setFile(e.target.files[0])}
+              />
+            </label>
             <div className={styles.shareOption}>
               <Label htmlColor='blue' className={styles.shareIcon} />
               <span className={styles.shareOptionText}>Tag</span>
@@ -43,8 +91,10 @@ const Share = () => {
               <span className={styles.shareOptionText}>Feelings</span>
             </div>
           </div>
-          <button className={styles.shareButton}>Share</button>
-        </div>
+          <button type='submit' className={styles.shareButton}>
+            Share
+          </button>
+        </form>
       </div>
     </div>
   );

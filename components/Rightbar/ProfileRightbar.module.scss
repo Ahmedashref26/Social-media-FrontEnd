@@ -9,6 +9,25 @@
     margin-bottom: 10px;
   }
 
+  &FollowButton {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: white;
+    background-color: $button-color;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
   &Info {
     margin-bottom: 30px;
   }
@@ -31,7 +50,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     column-gap: 5px;
-    justify-items: center;
+    // justify-items: center;
   }
 
   &Following {
@@ -39,6 +58,11 @@
     flex-direction: column;
     margin-bottom: 20px;
     cursor: pointer;
+
+    span {
+      width: 100px;
+      text-align: center;
+    }
   }
 
   &FollowingImg {

@@ -1,92 +1,90 @@
 import styles from './ProfileRightbar.module.scss';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { followUser, getFriends } from '../../util/API';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { Add, Remove } from '@mui/icons-material';
+import { reloadSession } from '../../util/reload';
 
-const ProfileRightbar = () => {
+const ProfileRightbar = ({ user }) => {
+  const [friends, setFriends] = useState([]);
+  const [followed, setFollowed] = useState(false);
+  const {
+    data: { user: currentUser },
+  } = useSession();
+  console.log('sessionUser:', currentUser);
+  console.log(followed);
+
+  useEffect(() => {
+    setFollowed(currentUser.followings.includes(user?._id));
+  }, [currentUser, user._id]);
+
+  useEffect(() => {
+    if (user._id) getFriends(user._id).then((friends) => setFriends(friends));
+  }, [user._id]);
+
+  const handleFollow = (e) => {
+    followUser(user._id, followed ? 'unfollow' : 'follow');
+    setFollowed((pre) => !pre);
+    // reloadSession();
+  };
+
+  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
   return (
     <>
+      {currentUser._id !== user._id && (
+        <button onClick={handleFollow} className={styles.rightbarFollowButton}>
+          {followed ? 'unfollow' : 'Follow'}
+          {followed ? <Remove /> : <Add />}
+        </button>
+      )}
       <h4 className={styles.rightbarTitle}>User information</h4>
       <div className={styles.rightbarInfo}>
         <div className={styles.rightbarInfoItem}>
           <span className={styles.rightbarInfoKey}>City:</span>
-          <span className={styles.rightbarInfoValue}>New York</span>
+          <span className={styles.rightbarInfoValue}>{user.city}</span>
         </div>
         <div className={styles.rightbarInfoItem}>
           <span className={styles.rightbarInfoKey}>From:</span>
-          <span className={styles.rightbarInfoValue}>Madrid</span>
+          <span className={styles.rightbarInfoValue}>{user.from}</span>
         </div>
         <div className={styles.rightbarInfoItem}>
           <span className={styles.rightbarInfoKey}>Relationship:</span>
-          <span className={styles.rightbarInfoValue}>Single</span>
+          <span className={styles.rightbarInfoValue}>
+            {user.relation === 1
+              ? 'Single'
+              : user.relation === 2
+              ? 'Married'
+              : '_'}
+          </span>
         </div>
       </div>
       <h4 className={styles.rightbarTitle}>User friends</h4>
       <div className={styles.rightbarFollowings}>
-        <div className={styles.rightbarFollowing}>
-          <div className={styles.rightbarFollowingImg}>
-            <Image
-              layout='fill'
-              objectFit='cover'
-              src='/assets/person/1.jpeg'
-              alt=''
-            />
-          </div>
-          <span className={styles.rightbarFollowingName}>John Carter</span>
-        </div>
-        <div className={styles.rightbarFollowing}>
-          <div className={styles.rightbarFollowingImg}>
-            <Image
-              layout='fill'
-              objectFit='cover'
-              src='/assets/person/2.jpeg'
-              alt=''
-            />
-          </div>
-          <span className={styles.rightbarFollowingName}>John Carter</span>
-        </div>
-        <div className={styles.rightbarFollowing}>
-          <div className={styles.rightbarFollowingImg}>
-            <Image
-              layout='fill'
-              objectFit='cover'
-              src='/assets/person/3.jpeg'
-              alt=''
-            />
-          </div>
-          <span className={styles.rightbarFollowingName}>John Carter</span>
-        </div>
-        <div className={styles.rightbarFollowing}>
-          <div className={styles.rightbarFollowingImg}>
-            <Image
-              layout='fill'
-              objectFit='cover'
-              src='/assets/person/4.jpeg'
-              alt=''
-            />
-          </div>
-          <span className={styles.rightbarFollowingName}>John Carter</span>
-        </div>
-        <div className={styles.rightbarFollowing}>
-          <div className={styles.rightbarFollowingImg}>
-            <Image
-              layout='fill'
-              objectFit='cover'
-              src='/assets/person/5.jpeg'
-              alt=''
-            />
-          </div>
-          <span className={styles.rightbarFollowingName}>John Carter</span>
-        </div>
-        <div className={styles.rightbarFollowing}>
-          <div className={styles.rightbarFollowingImg}>
-            <Image
-              layout='fill'
-              objectFit='cover'
-              src='/assets/person/6.jpeg'
-              alt=''
-            />
-          </div>
-          <span className={styles.rightbarFollowingName}>John Carter</span>
-        </div>
+        {friends &&
+          friends.length > 0 &&
+          friends.map((friend) => (
+            <Link key={friend._id} href={`/profile/${friend.username}`}>
+              <div className={styles.rightbarFollowing}>
+                <div className={styles.rightbarFollowingImg}>
+                  <Image
+                    layout='fill'
+                    objectFit='cover'
+                    src={
+                      friend
+                        ? `${PF}/person/${friend.profilePicture}`
+                        : `${PF}/person/noAvatar.webp`
+                    }
+                    alt=''
+                  />
+                </div>
+                <span className={styles.rightbarFollowingName}>
+                  {friend.name}
+                </span>
+              </div>
+            </Link>
+          ))}
       </div>
     </>
   );

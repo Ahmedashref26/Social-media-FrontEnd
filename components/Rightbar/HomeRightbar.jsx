@@ -4,6 +4,8 @@ import Online from '../Online/Online';
 import styles from './HomeRightbar.module.scss';
 
 const HomeRightbar = () => {
+  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
+
   return (
     <>
       <div className={styles.birthdayContainer}>
@@ -11,7 +13,7 @@ const HomeRightbar = () => {
           <Image
             layout='fill'
             objectFit='cover'
-            src='/assets/gift.png'
+            src={`${PF}/gift.png`}
             alt=''
           />
         </div>
@@ -20,7 +22,7 @@ const HomeRightbar = () => {
         </span>
       </div>
       <div className={styles.rightbarAd}>
-        <Image layout='fill' objectFit='cover' src='/assets/ad.png' alt='' />
+        <Image layout='fill' objectFit='cover' src={`${PF}/ad.png`} alt='' />
       </div>
       <h4 className={styles.rightbarTitle}>Online Friends</h4>
       <ul className={styles.rightbarFriendList}>

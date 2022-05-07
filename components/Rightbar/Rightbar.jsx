@@ -2,11 +2,11 @@ import styles from './Rightbar.module.scss';
 import ProfileRightbar from './ProfileRightbar';
 import HomeRightbar from './HomeRightbar';
 
-const Rightbar = ({ profile }) => {
+const Rightbar = ({ user }) => {
   return (
     <div className={styles.rightbar}>
       <div className={styles.rightbarWrapper}>
-        {profile ? <ProfileRightbar /> : <HomeRightbar />}
+        {user ? <ProfileRightbar user={user} /> : <HomeRightbar />}
       </div>
     </div>
   );
