@@ -13,11 +13,6 @@ const ProfileRightbar = ({ user }) => {
   const {
     data: { user: currentUser },
   } = useSession();
-  // getSession().then((session) =>
-  //   console.log('getSession', session?.user?.followings)
-  // );
-
-  console.log('useSession:', currentUser.followings);
 
   useEffect(() => {
     setFollowed(currentUser.followings.includes(user?._id));

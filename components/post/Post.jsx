@@ -12,7 +12,6 @@ export default function Post({ post }) {
   const [isLiked, setIsLiked] = useState(false);
   const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
 
-  console.log(post.image);
   const {
     data: { user: currentUser },
   } = useSession();
@@ -57,14 +56,16 @@ export default function Post({ post }) {
         </div>
         <div className={styles.postCenter}>
           <span className={styles.postText}>{post?.description}</span>
-          <div className={styles.postImg}>
-            <Image
-              layout='fill'
-              objectFit='cover'
-              src={`${PF}/${post.image}`}
-              alt=''
-            />
-          </div>
+          {post.image && (
+            <div className={styles.postImg}>
+              <Image
+                layout='fill'
+                objectFit='cover'
+                src={`${PF}/${post.image}`}
+                alt=''
+              />
+            </div>
+          )}
         </div>
         <div className={styles.postBottom}>
           <div className={styles.postBottomLeft}>
