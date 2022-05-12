@@ -42,10 +42,12 @@ const Navbar = () => {
               <Person />
               <span className={styles.navbarIconBadge}>1</span>
             </div>
-            <div className={styles.navbarIconItem}>
-              <Chat />
-              <span className={styles.navbarIconBadge}>2</span>
-            </div>
+            <Link href='/messenger'>
+              <div className={styles.navbarIconItem}>
+                <Chat />
+                <span className={styles.navbarIconBadge}>2</span>
+              </div>
+            </Link>
             <div className={styles.navbarIconItem}>
               <Notifications />
               <span className={styles.navbarIconBadge}>1</span>

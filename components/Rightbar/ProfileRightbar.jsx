@@ -70,7 +70,7 @@ const ProfileRightbar = ({ user }) => {
                     layout='fill'
                     objectFit='cover'
                     src={
-                      friend
+                      friend.profilePicture
                         ? `${PF}/person/${friend.profilePicture}`
                         : `${PF}/person/noAvatar.webp`
                     }

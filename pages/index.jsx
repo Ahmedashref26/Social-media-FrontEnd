@@ -1,12 +1,9 @@
-import { useContext, useEffect } from 'react';
 import Feed from '../components/Feed/Feed';
 import Navbar from '../components/Navbar/Navbar';
 import Rightbar from '../components/Rightbar/Rightbar';
 import Sidebar from '../components/Sidebar/Sidebar';
-import AuthContext from '../store/authContext';
 import Styles from '../styles/Home.module.scss';
-import { useRouter } from 'next/router';
-import { useSession, getSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 
 const HomePage = (props) => {
   return (

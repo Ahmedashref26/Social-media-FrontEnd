@@ -51,6 +51,15 @@ export const addPost = async (post) => {
   return res.data.post;
 };
 
+export const deletePost = async (postId) => {
+  const res = await axios.delete(`/api/v1/posts/${postId}`);
+  if (res.data?.status === 'failed') {
+    console.log(res.data.message);
+    return false;
+  }
+  return true;
+};
+
 export const getFriends = async (id) => {
   const res = await axios.get(`/api/v1/users/friends/${id}`);
   return res.data.friends;
@@ -59,9 +68,46 @@ export const getFriends = async (id) => {
 export const followUser = async (id, action) => {
   try {
     const res = await axios.put(`/api/v1/users/${id}/${action}`);
-    console.log(res.data.message);
     return res.data.message;
   } catch (err) {
-    console.error(err.response.data.message);
+    console.error(err.response.data.message || err.response.data.data.message);
+  }
+};
+
+export const getConversations = async () => {
+  try {
+    const res = await axios.get(`/api/v1/conversation`);
+    return res.data.conversation;
+  } catch (err) {
+    console.error(err.response.data.message || err.response.data.data.message);
+  }
+};
+
+export const getTwoUsersConv = async (userId) => {
+  try {
+    const res = await axios.get(`/api/v1/conversation/find/${userId}`);
+    return res.data.conversation;
+  } catch (err) {
+    console.error(err.response.data.message || err.response.data.data.message);
+  }
+};
+
+export const getMessages = async (id) => {
+  try {
+    const res = await axios.get(`/api/v1/conversation/${id}/messages`);
+    return res.data.messages;
+  } catch (err) {
+    console.log(err);
+    console.error(err.response.data.message || err.response.data.data.message);
+    return [];
+  }
+};
+
+export const sendMessage = async (msg) => {
+  try {
+    const res = await axios.post(`/api/v1/conversation/messages`, msg);
+    return res.data.message;
+  } catch (err) {
+    console.error(err.response.data.message || err.response.data.data.message);
   }
 };

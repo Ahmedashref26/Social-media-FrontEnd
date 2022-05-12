@@ -37,6 +37,7 @@ const Share = ({ update }) => {
 
     addPost(newPost);
     desc.current.value = '';
+    setFile(null);
     update((pre) => !pre);
   };
 

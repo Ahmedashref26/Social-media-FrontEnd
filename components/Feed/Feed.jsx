@@ -36,7 +36,7 @@ const Feed = ({ user }) => {
           <Share update={setUpdate} />
         )}
         {posts.map((p) => (
-          <Post key={p._id} post={p} />
+          <Post key={p._id} post={p} update={setUpdate} />
         ))}
       </div>
     </div>
