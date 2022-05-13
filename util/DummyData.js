@@ -1,53 +1,53 @@
 export const Users = [
   {
     id: 1,
-    profilePicture: '/assets/person/1.jpeg',
-    username: 'Safak Kocaoglu',
+    profilePicture: '1.jpeg',
+    name: 'Safak Kocaoglu',
   },
   {
     id: 2,
-    profilePicture: '/assets/person/2.jpeg',
-    username: 'Janell Shrum',
+    profilePicture: '2.jpeg',
+    name: 'Janell Shrum',
   },
   {
     id: 3,
-    profilePicture: '/assets/person/3.jpeg',
-    username: 'Alex Durden',
+    profilePicture: '3.jpeg',
+    name: 'Alex Durden',
   },
   {
     id: 4,
-    profilePicture: '/assets/person/4.jpeg',
-    username: 'Dora Hawks',
+    profilePicture: '4.jpeg',
+    name: 'Dora Hawks',
   },
   {
     id: 5,
-    profilePicture: '/assets/person/5.jpeg',
-    username: 'Thomas Holden',
+    profilePicture: '5.jpeg',
+    name: 'Thomas Holden',
   },
   {
     id: 6,
-    profilePicture: '/assets/person/6.jpeg',
-    username: 'Shirley Beauchamp',
+    profilePicture: '6.jpeg',
+    name: 'Shirley Beauchamp',
   },
   {
     id: 7,
-    profilePicture: '/assets/person/7.jpeg',
-    username: 'Travis Bennett',
+    profilePicture: '7.jpeg',
+    name: 'Travis Bennett',
   },
   {
     id: 8,
-    profilePicture: '/assets/person/8.jpeg',
-    username: 'Kristen Thomas',
+    profilePicture: '8.jpeg',
+    name: 'Kristen Thomas',
   },
   {
     id: 9,
-    profilePicture: '/assets/person/9.jpeg',
-    username: 'Gary Duty',
+    profilePicture: '9.jpeg',
+    name: 'Gary Duty',
   },
   {
     id: 10,
-    profilePicture: '/assets/person/10.jpeg',
-    username: 'Safak Kocaoglu',
+    profilePicture: '10.jpeg',
+    name: 'Safak Kocaoglu',
   },
 ];
 

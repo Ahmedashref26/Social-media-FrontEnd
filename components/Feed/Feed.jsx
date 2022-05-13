@@ -1,4 +1,3 @@
-// import { Posts } from '../../util/DummyData';
 import { useEffect, useState } from 'react';
 import { getUserPosts, getUserTimeline } from '../../util/API';
 import Post from '../post/Post';

@@ -1,8 +1,9 @@
-import { Chat, Notifications, Person, Search } from '@mui/icons-material';
+import { Chat, Notifications, Person } from '@mui/icons-material';
 import Image from 'next/image';
 import styles from './Navbar.module.scss';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
+import Search from '../Search/Search';
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -18,13 +19,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className={styles.navbarCenter}>
-          <div className={styles.navbarSearchbar}>
-            <Search className={styles.navbarSearchIcon} />
-            <input
-              placeholder='Search for friends, posts, or videos'
-              className={styles.navbarInput}
-            />
-          </div>
+          <Search />
         </div>
         <div className={styles.navbarRight}>
           <div className={styles.navbarLinks}>

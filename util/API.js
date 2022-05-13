@@ -25,6 +25,15 @@ export const getUser = async (user, by = 'userId') => {
   }
 };
 
+export const searchUsers = async (q, limit = 0) => {
+  try {
+    const res = await axios.get(`${url}/users/search?q=${q}&limit=${limit}`);
+    return res.data;
+  } catch (err) {
+    console.log(err.response.data.message);
+  }
+};
+
 export const getUserTimeline = async () => {
   const res = await axios.get(`/api/v1/posts/timeline`, {
     withCredentials: true,

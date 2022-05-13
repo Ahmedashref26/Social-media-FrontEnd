@@ -10,7 +10,7 @@ import {
   Event,
   School,
 } from '@mui/icons-material';
-import CloseFriend from '../CloseFriend/CloseFriend';
+import Friend from '../Friend/Friend';
 import { Users } from '../../util/DummyData';
 
 const Sidebar = () => {
@@ -59,7 +59,7 @@ const Sidebar = () => {
         <hr className={styles.sidebarHr} />
         <ul className={styles.sidebarFriendList}>
           {Users.map((u) => (
-            <CloseFriend key={u.id} user={u} />
+            <Friend key={u.id} user={u} />
           ))}
         </ul>
       </div>
