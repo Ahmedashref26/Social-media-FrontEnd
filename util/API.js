@@ -52,7 +52,7 @@ export const likePost = async (postId, userId) => {
 
 export const uploadFile = async (data) => {
   const res = await axios.post('/api/v1/upload', data);
-  return res.data.filename;
+  return res.data?.status === 'success' ? res.data.filename : null;
 };
 
 export const addPost = async (post) => {
@@ -62,7 +62,16 @@ export const addPost = async (post) => {
 
 export const deletePost = async (postId) => {
   const res = await axios.delete(`/api/v1/posts/${postId}`);
-  if (res.data?.status === 'failed') {
+  if (res.data?.status === 'failed' || res.data?.status === 'error') {
+    console.log(res.data.message);
+    return false;
+  }
+  return true;
+};
+
+export const updatePost = async (postId, updatedPost) => {
+  const res = await axios.put(`/api/v1/posts/${postId}`, updatedPost);
+  if (res.data?.status === 'failed' || res.data?.status === 'error') {
     console.log(res.data.message);
     return false;
   }
