@@ -129,3 +129,25 @@ export const sendMessage = async (msg) => {
     console.error(err.response.data.message || err.response.data.data.message);
   }
 };
+
+export const addComment = async (postId, comment) => {
+  try {
+    const res = await axios.post(`/api/v1/posts/${postId}/comments`, comment);
+    if (res.data.status === 'success') return res.data.comment;
+    if (res.data.status === 'failed' || res.data.status === 'error')
+      return null;
+  } catch (err) {
+    console.error(err.response.data.message || err.response.data.data.message);
+  }
+};
+
+export const getComments = async (postId) => {
+  try {
+    const res = await axios.get(`/api/v1/posts/${postId}/comments`);
+    if (res.data.status === 'success') return res.data.comments;
+    if (res.data.status === 'failed' || res.data.status === 'error')
+      return null;
+  } catch (err) {
+    console.error(err.response.data.message || err.response.data.data.message);
+  }
+};

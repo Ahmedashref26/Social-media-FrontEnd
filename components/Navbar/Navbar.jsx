@@ -7,7 +7,7 @@ import Search from '../Search/Search';
 
 const Navbar = () => {
   const { data: session } = useSession();
-  const { user } = session;
+  const user = session?.user;
   const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
 
   return (

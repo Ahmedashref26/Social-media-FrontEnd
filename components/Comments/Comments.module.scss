@@ -1,0 +1,72 @@
+.comment {
+  margin-top: 20px;
+
+  &ProfileImg {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  &New,
+  &Item {
+    display: flex;
+    gap: 10px;
+    // align-items: center;
+  }
+
+  &Input {
+    width: 100%;
+    border-radius: 50px;
+    border: none;
+    background: #3a3b3c0f;
+    padding: 10px 14px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &List {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  &Content {
+    display: flex;
+    flex-direction: column;
+    background-color: #f3f3f4;
+    border-radius: 10px;
+    padding: 6px 8px;
+    width: fit-content;
+
+    &Title {
+      display: flex;
+      flex-direction: column;
+    }
+    &Author {
+      display: block;
+      margin-bottom: 1px;
+      font-weight: 600;
+    }
+    &Stamp {
+      font-size: 12px;
+      font-weight: 300;
+      color: #74747e;
+    }
+    &Text {
+      margin: 10px 0 4px;
+    }
+  }
+
+  &Hide {
+    font-size: 13px;
+    border-bottom: 1px solid #888;
+    cursor: pointer;
+  }
+}

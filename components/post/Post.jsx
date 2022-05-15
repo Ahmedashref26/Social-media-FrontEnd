@@ -9,6 +9,7 @@ import { useSession } from 'next-auth/react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import CircularProgress from '@mui/material/CircularProgress';
+import Comments from '../Comments/Comments';
 
 export default function Post({ post, update }) {
   const [like, setLike] = useState(post.likes.length);
@@ -18,6 +19,7 @@ export default function Post({ post, update }) {
   const [editing, setEditing] = useState(false);
   const [file, setFile] = useState(post?.image);
   const [desc, setDesc] = useState(post?.description);
+  const [showComment, setShowComment] = useState(false);
 
   const open = Boolean(anchorEl);
   const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
@@ -119,6 +121,7 @@ export default function Post({ post, update }) {
                 id='post-menu'
                 anchorEl={anchorEl}
                 open={open}
+                onClose={() => setAnchorEl(null)}
                 MenuListProps={{
                   'aria-labelledby': 'post-options',
                 }}
@@ -178,36 +181,48 @@ export default function Post({ post, update }) {
           )}
         </div>
         {!editing && (
-          <div className={styles.postBottom}>
-            <div className={styles.postBottomLeft}>
-              <div className={styles.likeIcon}>
-                <Image
-                  layout='fill'
-                  objectFit='cover'
-                  src={`${PF}/like.png`}
-                  onClick={likeHandler}
-                  alt=''
-                />
+          <>
+            <div className={styles.postBottom}>
+              <div className={styles.postBottomLeft}>
+                <div className={styles.likeIcon}>
+                  <Image
+                    layout='fill'
+                    objectFit='cover'
+                    src={`${PF}/like.png`}
+                    onClick={likeHandler}
+                    alt=''
+                  />
+                </div>
+                <div className={styles.likeIcon}>
+                  <Image
+                    layout='fill'
+                    objectFit='cover'
+                    src={`${PF}/heart.png`}
+                    onClick={likeHandler}
+                    alt=''
+                  />
+                </div>
+                <span className={styles.postLikeCounter}>
+                  {like} people like it
+                </span>
               </div>
-              <div className={styles.likeIcon}>
-                <Image
-                  layout='fill'
-                  objectFit='cover'
-                  src={`${PF}/heart.png`}
-                  onClick={likeHandler}
-                  alt=''
-                />
+              <div className={styles.postBottomRight}>
+                <span
+                  onClick={() => setShowComment(true)}
+                  className={styles.postCommentText}
+                >
+                  {post.comment} comments
+                </span>
               </div>
-              <span className={styles.postLikeCounter}>
-                {like} people like it
-              </span>
             </div>
-            <div className={styles.postBottomRight}>
-              <span className={styles.postCommentText}>
-                {post.comment} comments
-              </span>
-            </div>
-          </div>
+            {showComment && (
+              <Comments
+                post={post._id}
+                currentUser={currentUser}
+                show={setShowComment}
+              />
+            )}
+          </>
         )}
         {editing && (
           <div className={styles.postBottomEdit}>
