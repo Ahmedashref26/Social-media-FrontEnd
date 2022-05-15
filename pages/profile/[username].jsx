@@ -9,7 +9,7 @@ import { getUser } from '../../util/API';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
 
-const ProfilePage = () => {
+const ProfilePage = ({ user: currentUser }) => {
   const [user, setUser] = useState({});
   const router = useRouter();
   const { username } = router.query;
@@ -23,7 +23,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar user={currentUser} />
       <div className={styles.profile}>
         <Sidebar />
         <div className={styles.profileRight}>
@@ -43,15 +43,15 @@ const ProfilePage = () => {
                   objectFit='cover'
                   src={
                     user.profilePicture
-                      ? `${PF}/person/${user.profilePicture}`
-                      : `${PF}/person/noAvatar.webp`
+                      ? `${PF}/${user.profilePicture}`
+                      : `${PF}/noAvatar.webp`
                   }
                   alt=''
                 />
               </div>
             </div>
             <div className={styles.profileInfo}>
-              <h4 className={styles.profileInfoName}>{user.username}</h4>
+              <h4 className={styles.profileInfoName}>{user.name}</h4>
               <span className={styles.profileInfoDesc}>{user.desc}</span>
             </div>
           </div>
@@ -80,6 +80,7 @@ export const getServerSideProps = async (context) => {
   return {
     props: {
       session,
+      user: session.user,
     },
   };
 };

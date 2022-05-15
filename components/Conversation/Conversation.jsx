@@ -14,8 +14,8 @@ const Conversation = ({ conversation, currentUser }) => {
         <Image
           src={
             friend.profilePicture
-              ? `${PF}/person/${friend.profilePicture}`
-              : `${PF}/person/noAvatar.webp`
+              ? `${PF}/${friend.profilePicture}`
+              : `${PF}/noAvatar.webp`
           }
           width={200}
           height={200}

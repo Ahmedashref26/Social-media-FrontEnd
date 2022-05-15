@@ -16,8 +16,8 @@ const CommentList = ({ styles, comments }) => {
                 objectFit='cover'
                 src={
                   (comment.user.profilePicture &&
-                    `${PF}/person/${comment.user.profilePicture}`) ||
-                  `${PF}/person/noAvatar.webp`
+                    `${PF}/${comment.user.profilePicture}`) ||
+                  `${PF}/noAvatar.webp`
                 }
                 alt=''
               />

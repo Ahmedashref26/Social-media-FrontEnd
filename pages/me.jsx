@@ -1,19 +1,13 @@
-import Feed from '../components/Feed/Feed';
+import styles from '../styles/me.module.scss';
 import Navbar from '../components/Navbar/Navbar';
-import Rightbar from '../components/Rightbar/Rightbar';
-import Sidebar from '../components/Sidebar/Sidebar';
-import Styles from '../styles/Home.module.scss';
 import { getSession } from 'next-auth/react';
+import ProfileSetting from '../components/ProfileSetting/profileSetting';
 
-const HomePage = ({ user }) => {
+const settingPage = ({ user }) => {
   return (
     <>
       <Navbar user={user} />
-      <div className={Styles.homeContainer}>
-        <Sidebar />
-        <Feed />
-        <Rightbar />
-      </div>
+      <ProfileSetting styles={styles} />
     </>
   );
 };
@@ -35,4 +29,4 @@ export const getServerSideProps = async ({ req }) => {
   };
 };
 
-export default HomePage;
+export default settingPage;

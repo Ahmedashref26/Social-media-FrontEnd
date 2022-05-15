@@ -76,7 +76,7 @@ const MessengerPage = ({ user }) => {
   };
   return (
     <>
-      <Navbar />
+      <Navbar user={user} />
       <div className={styles.messenger}>
         <div className={styles.chatMenu}>
           <div className={styles.chatMenuWrapper}>

@@ -151,3 +151,49 @@ export const getComments = async (postId) => {
     console.error(err.response.data.message || err.response.data.data.message);
   }
 };
+
+export const updateInfo = async (updatedInfo) => {
+  try {
+    const res = await axios.put(`/api/v1/users/updateMe`, updatedInfo);
+    if (res.data.status === 'success')
+      return {
+        status: 'success',
+        msg: 'Updated Successfully!',
+        user: res.data.user,
+      };
+    if (res.data.status === 'failed' || res.data.status === 'error')
+      return {
+        user: null,
+        status: 'error',
+        msg:
+          err.response.data.message ||
+          err.response.data.data.message ||
+          'Something went wrong Try agian',
+      };
+  } catch (err) {
+    console.error(err.response.data.message || err.response.data.data.message);
+  }
+};
+
+export const updatePass = async (updatedPass) => {
+  try {
+    const res = await axios.put(`/api/v1/users/updateMyPassword`, updatedPass);
+    if (res.data.status === 'success')
+      return {
+        status: 'success',
+        msg: 'Updated Successfully!',
+        user: res.data.user,
+      };
+    if (res.data.status === 'failed' || res.data.status === 'error')
+      return {
+        user: null,
+        status: 'error',
+        msg:
+          err.response.data.message ||
+          err.response.data.data.message ||
+          'Something went wrong Try agian',
+      };
+  } catch (err) {
+    console.error(err.response.data.message || err.response.data.data.message);
+  }
+};

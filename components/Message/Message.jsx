@@ -14,8 +14,8 @@ export default function Message({ message, own }) {
             <Image
               src={
                 message.sender.profilePicture
-                  ? `${PF}/person/${message.sender.profilePicture}`
-                  : `${PF}/person/noAvatar.webp`
+                  ? `${PF}/${message.sender.profilePicture}`
+                  : `${PF}/noAvatar.webp`
               }
               alt=''
               width={200}

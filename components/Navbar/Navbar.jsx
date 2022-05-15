@@ -5,9 +5,7 @@ import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 import Search from '../Search/Search';
 
-const Navbar = () => {
-  const { data: session } = useSession();
-  const user = session?.user;
+const Navbar = ({ user }) => {
   const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
 
   return (
@@ -52,9 +50,8 @@ const Navbar = () => {
             <div className={styles.navbarImg}>
               <Image
                 src={
-                  (user.profilePicture &&
-                    `${PF}/person/${user.profilePicture}`) ||
-                  `${PF}/person/noAvatar.webp`
+                  (user.profilePicture && `${PF}/${user.profilePicture}`) ||
+                  `${PF}/noAvatar.webp`
                 }
                 alt='profile picture'
                 layout='fill'

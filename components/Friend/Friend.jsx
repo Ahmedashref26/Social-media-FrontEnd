@@ -12,8 +12,8 @@ export default function Friend({ user }) {
           objectFit='cover'
           src={
             user.profilePicture
-              ? `${PF}/person/${user.profilePicture}`
-              : `${PF}/person/noAvatar.webp`
+              ? `${PF}/${user.profilePicture}`
+              : `${PF}/noAvatar.webp`
           }
           alt=''
         />

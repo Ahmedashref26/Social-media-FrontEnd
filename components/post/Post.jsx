@@ -96,9 +96,8 @@ export default function Post({ post, update }) {
                   layout='fill'
                   objectFit='cover'
                   src={
-                    (user.profilePicture &&
-                      `${PF}/person/${user.profilePicture}`) ||
-                    `${PF}/person/noAvatar.webp`
+                    (user.profilePicture && `${PF}/${user.profilePicture}`) ||
+                    `${PF}/noAvatar.webp`
                   }
                   alt=''
                 />

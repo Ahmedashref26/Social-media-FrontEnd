@@ -36,8 +36,8 @@ const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
               <Image
                 src={
                   o?.profilePicture
-                    ? `${PF}/person/${o.profilePicture}`
-                    : `${PF}/person/noAvatar.webp`
+                    ? `${PF}/${o.profilePicture}`
+                    : `${PF}/noAvatar.webp`
                 }
                 alt=''
                 width={200}
