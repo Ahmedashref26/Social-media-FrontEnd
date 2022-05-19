@@ -1,9 +1,17 @@
 .sidebar {
-  flex: 3;
-  height: calc(100vh - 50px);
+  flex: 2.5;
+  height: calc(100vh - 60px);
   overflow-y: scroll;
   position: sticky;
   top: 50px;
+
+  @media only screen and (max-width: 800px) {
+    flex: 1;
+  }
+
+  @media only screen and (max-width: 750px) {
+    display: none;
+  }
 
   &::-webkit-scrollbar {
     width: 5px;
@@ -27,12 +35,36 @@
 
   &ListItem {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     align-items: center;
     margin-bottom: 20px;
+    padding: 12px 6px;
+    cursor: pointer;
+    gap: 15px;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: #eee;
+    }
+
+    &Text {
+      width: 60px;
+      text-align: center;
+      @media only screen and (max-width: 900px) {
+        margin: 0 auto;
+      }
+
+      @media only screen and (max-width: 800px) {
+        display: none;
+      }
+    }
   }
 
   &Icon {
-    margin-right: 15px;
+    @media only screen and (max-width: 900px) {
+      margin: 0 auto;
+    }
   }
 
   &Button {

@@ -1,6 +1,6 @@
 import styles from './post.module.scss';
 import { Cancel, MoreVert } from '@mui/icons-material';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { format } from 'timeago.js';
 import Link from 'next/link';
@@ -10,6 +10,10 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import CircularProgress from '@mui/material/CircularProgress';
 import Comments from '../Comments/Comments';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import InsertCommentOutlinedIcon from '@mui/icons-material/InsertCommentOutlined';
+import SocketContext from '../../store/socketContext';
 
 export default function Post({ post, update }) {
   const [like, setLike] = useState(post.likes.length);
@@ -20,6 +24,8 @@ export default function Post({ post, update }) {
   const [file, setFile] = useState(post?.image);
   const [desc, setDesc] = useState(post?.description);
   const [showComment, setShowComment] = useState(false);
+
+  const socket = useContext(SocketContext);
 
   const open = Boolean(anchorEl);
   const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
@@ -39,6 +45,16 @@ export default function Post({ post, update }) {
     likePost(post._id, currentUser._id);
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
+    !isLiked &&
+      !own &&
+      socket.emit('sendLikeNotification', {
+        sender: currentUser.name,
+        receiver: user._id,
+        desc:
+          post.description.length > 20
+            ? `${post.description.substring(0, 20)}...`
+            : post.description,
+      });
   };
 
   const deleteHandler = async () => {
@@ -184,15 +200,12 @@ export default function Post({ post, update }) {
             <div className={styles.postBottom}>
               <div className={styles.postBottomLeft}>
                 <div className={styles.likeIcon}>
-                  <Image
-                    layout='fill'
-                    objectFit='cover'
-                    src={`${PF}/like.png`}
-                    onClick={likeHandler}
-                    alt=''
-                  />
+                  {isLiked && (
+                    <FavoriteIcon color='error' onClick={likeHandler} />
+                  )}
+                  {!isLiked && <FavoriteBorderIcon onClick={likeHandler} />}
                 </div>
-                <div className={styles.likeIcon}>
+                {/* <div className={styles.likeIcon}>
                   <Image
                     layout='fill'
                     objectFit='cover'
@@ -200,7 +213,7 @@ export default function Post({ post, update }) {
                     onClick={likeHandler}
                     alt=''
                   />
-                </div>
+                </div> */}
                 <span className={styles.postLikeCounter}>
                   {like} people like it
                 </span>
@@ -210,7 +223,7 @@ export default function Post({ post, update }) {
                   onClick={() => setShowComment(true)}
                   className={styles.postCommentText}
                 >
-                  {post.comment} comments
+                  <InsertCommentOutlinedIcon /> comments
                 </span>
               </div>
             </div>

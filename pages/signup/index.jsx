@@ -1,6 +1,6 @@
 import styles from '../../styles/Signup.module.scss';
-import { useEffect, useRef, useState } from 'react';
-import { signIn, useSession } from 'next-auth/react';
+import { useRef, useState } from 'react';
+import { getSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import CircularProgress from '@mui/material/CircularProgress';
 import Link from 'next/link';
@@ -13,15 +13,8 @@ const SignupPage = () => {
   const password = useRef();
   const passwordConfirm = useRef();
   const router = useRouter();
-  const { data: session } = useSession();
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState();
-
-  useEffect(() => {
-    if (session) {
-      router.replace('/');
-    }
-  }, [session]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -132,4 +125,23 @@ const SignupPage = () => {
     </div>
   );
 };
+
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+      props: { session },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
+
 export default SignupPage;

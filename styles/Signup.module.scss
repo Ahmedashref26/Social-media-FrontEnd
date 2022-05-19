@@ -1,16 +1,23 @@
 .signup {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #f0f2f5;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  overflow: hidden;
 
   &Wrapper {
-    width: 70%;
-    height: 70%;
+    // width: 70%;
+    // height: 70%;
     display: flex;
+    padding: 40px;
+    @media screen and (max-width: 750px) {
+      flex-direction: column;
+      gap: 30px;
+      align-items: center;
+    }
   }
 
   &Left,
@@ -21,8 +28,17 @@
     justify-content: center;
   }
 
+  &Right {
+    @media screen and (max-width: 750px) {
+      width: 80%;
+    }
+  }
+
   &Left {
     padding: 0 30px;
+    @media screen and (max-width: 750px) {
+      text-align: center;
+    }
   }
 
   &Logo {
@@ -63,7 +79,7 @@
     height: 50px;
     border-radius: 10px;
     border: none;
-    background-color: $main-color;
+    background-color: $button-color;
     color: white;
     font-size: 20px;
     font-weight: 500;
@@ -85,7 +101,7 @@
     height: 50px;
     border-radius: 10px;
     border: none;
-    background-color: #42b72a;
+    background-color: $button-color;
     color: white;
     font-size: 20px;
     font-weight: 500;

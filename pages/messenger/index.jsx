@@ -1,12 +1,15 @@
 import { getSession, useSession } from 'next-auth/react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import ChatOnline from '../../components/ChatOnline/ChatOnline';
 import Conversation from '../../components/Conversation/Conversation';
 import Message from '../../components/Message/Message';
 import Navbar from '../../components/Navbar/Navbar';
 import styles from '../../styles/Messenger.module.scss';
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 import { getConversations, getMessages, sendMessage } from '../../util/API';
+// import { socket } from '../../util/socket';
+import SocketContext from '../../store/socketContext';
+import { Send } from '@mui/icons-material';
 
 const MessengerPage = ({ user }) => {
   const [conversations, setConversations] = useState([]);
@@ -15,15 +18,20 @@ const MessengerPage = ({ user }) => {
   const [newMessage, setNewMessage] = useState('');
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
-  const socket = useRef();
-
+  // const socket = useRef();
+  const socket = useContext(SocketContext);
   const scrollRef = useRef();
 
   useEffect(() => {
+    console.log(socket);
     // establish socket connection
-    socket.current = io('ws://localhost:8900');
+    // socket.current = io('ws://localhost:8900');
     //get message from socket server
-    socket.current.on('getMessage', (msg) => setArrivalMessage(msg));
+    // socket.current.on('getMessage', (msg) => setArrivalMessage(msg));
+    socket.on('getMessage', (msg) => setArrivalMessage(msg));
+    socket.on('getUsers', (users) => {
+      setOnlineUsers(users);
+    });
     //get all conversations
     getConversations().then((conv) => setConversations(conv));
   }, []);
@@ -36,12 +44,14 @@ const MessengerPage = ({ user }) => {
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 
-  useEffect(() => {
-    socket.current.emit('addUser', user._id);
-    socket.current.on('getUsers', (users) => {
-      setOnlineUsers(users);
-    });
-  }, [user]);
+  // useEffect(() => {
+  //   // socket.current.emit('addUser', user._id);
+  //   // socket.current.on('getUsers', (users) => {
+  //   socket.emit('addUser', user._id);
+  //   socket.on('getUsers', (users) => {
+  //     setOnlineUsers(users);
+  //   });
+  // }, []);
 
   useEffect(() => {
     if (currentChat) {
@@ -67,7 +77,8 @@ const MessengerPage = ({ user }) => {
     sendMessage(message).then((msg) => {
       setMessages([...messages, msg]);
       // send message to socket server
-      socket.current.emit('sendMessage', {
+      // socket.current.emit('sendMessage', {
+      socket.emit('sendMessage', {
         ...msg,
         receiverId: receiver._id,
       });
@@ -117,6 +128,7 @@ const MessengerPage = ({ user }) => {
                     onClick={handleSubmit}
                   >
                     Send
+                    <Send />
                   </button>
                 </div>
               </>
@@ -127,7 +139,7 @@ const MessengerPage = ({ user }) => {
             )}
           </div>
         </div>
-        <div className={styles.chatOnline}>
+        {/* <div className={styles.chatOnline}>
           <div className={styles.chatOnlineWrapper}>
             <ChatOnline
               onlineUsers={onlineUsers}
@@ -135,7 +147,7 @@ const MessengerPage = ({ user }) => {
               setCurrentChat={setCurrentChat}
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

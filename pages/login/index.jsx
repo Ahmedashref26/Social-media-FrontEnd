@@ -64,7 +64,7 @@ const LoginPage = () => {
                 'Log In'
               )}
             </button>
-            <span className={styles.loginForgot}>Forgot Password?</span>
+            {/* <span className={styles.loginForgot}>Forgot Password?</span> */}
             <Link href='/signup'>
               <span className={styles.loginRegisterButton}>
                 Create a New Account

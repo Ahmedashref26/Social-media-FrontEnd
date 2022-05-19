@@ -1,5 +1,13 @@
 .home {
   &Container {
     display: flex;
+    gap: 70px;
+
+    @media only screen and (max-width: 1000px) {
+      gap: 40px;
+    }
+    @media only screen and (max-width: 500px) {
+      display: block;
+    }
   }
 }

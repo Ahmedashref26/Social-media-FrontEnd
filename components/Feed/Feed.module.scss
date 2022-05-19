@@ -1,7 +1,19 @@
 .feed {
   flex: 5.5;
 
+  @media only screen and (max-width: 800px) {
+    flex: 2;
+  }
+
   &Wrapper {
     padding: 20px;
+
+    @media only screen and (max-width: 650px) {
+      padding: 50px;
+    }
+
+    @media only screen and (max-width: 500px) {
+      padding: 20px;
+    }
   }
 }

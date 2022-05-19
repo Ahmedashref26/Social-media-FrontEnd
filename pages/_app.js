@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { SessionProvider } from 'next-auth/react';
+import { SocketProvider } from '../store/socketContext';
 import '../styles/globals.scss';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
@@ -14,7 +15,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>
       <SessionProvider session={session}>
-        <Component {...pageProps} />
+        <SocketProvider>
+          <Component {...pageProps} />
+        </SocketProvider>
       </SessionProvider>
     </>
   );

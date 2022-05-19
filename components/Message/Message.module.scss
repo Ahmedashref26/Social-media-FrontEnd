@@ -20,14 +20,15 @@
 .messageText {
   padding: 10px;
   border-radius: 20px;
-  background-color: #1877f2;
+  background-color: $main-color;
   color: white;
   max-width: 300px;
 }
 
 .messageBottom {
-  font-size: 12px;
-  margin-top: 10px;
+  font-size: 10px;
+  margin-top: -15px;
+  color: #999;
 }
 
 .message.own {

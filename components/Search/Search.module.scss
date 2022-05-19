@@ -1,5 +1,7 @@
 .search {
   position: relative;
+  max-width: 70%;
+  margin: 0 auto;
 
   &bar {
     width: 100%;
@@ -8,6 +10,7 @@
     border-radius: 30px;
     display: flex;
     align-items: center;
+    overflow: hidden;
   }
 
   &Icon {
@@ -18,6 +21,7 @@
   &Input {
     border: none;
     width: 70%;
+    text-overflow: ellipsis;
 
     &:focus {
       outline: none;
@@ -27,18 +31,26 @@
   &Results {
     position: absolute;
     background: white;
-    width: 100%;
+    width: 130%;
     top: 100%;
     border-radius: 5px;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     padding: 20px 30px;
+    grid-gap: 10px;
     gap: 10px;
 
     li {
       &:hover {
         opacity: 0.7;
+      }
+
+      div {
+        @media only screen and (max-width: 400px) {
+          display: none;
+        }
       }
     }
 

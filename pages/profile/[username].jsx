@@ -25,7 +25,7 @@ const ProfilePage = ({ user: currentUser }) => {
     <>
       <Navbar user={currentUser} />
       <div className={styles.profile}>
-        <Sidebar />
+        <Sidebar user={currentUser} />
         <div className={styles.profileRight}>
           <div className={styles.profileRightTop}>
             <div className={styles.profileCover}>

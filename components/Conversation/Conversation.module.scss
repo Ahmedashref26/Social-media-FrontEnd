@@ -1,9 +1,13 @@
 .conversation {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   padding: 10px;
   cursor: pointer;
   margin-top: 20px;
+  @media screen and (max-width: 600px) {
+    justify-content: center;
+  }
 
   &:hover {
     background-color: rgb(245, 243, 243);
@@ -16,13 +20,17 @@
     object-fit: cover;
     margin-right: 20px;
     overflow: hidden;
+
+    @media screen and (max-width: 600px) {
+      width: 50px;
+      height: 50px;
+    }
   }
 
   &Name {
     font-weight: 500;
-  }
-
-  @media screen and (max-width: 768px) {
-    display: none;
+    @media screen and (max-width: 600px) {
+      display: none;
+    }
   }
 }

@@ -10,7 +10,7 @@ const HomePage = ({ user }) => {
     <>
       <Navbar user={user} />
       <div className={Styles.homeContainer}>
-        <Sidebar />
+        <Sidebar user={user} />
         <Feed />
         <Rightbar />
       </div>
