@@ -1,12 +1,14 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import SocketContext from '../../store/socketContext';
-import { getFriends, getTwoUsersConv } from '../../util/API';
+import { getFriends, getTwoUsersConv, startConversation } from '../../util/API';
 import styles from './FriendsOnline.module.scss';
 
-const FriendsOnline = ({ setCurrentChat }) => {
+const FriendsOnline = () => {
   const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
   const { onlineUsers, userId } = useContext(SocketContext);
+  const router = useRouter();
 
   const [friends, setFriends] = useState([]);
   const [onlineFriends, setOnlineFriends] = useState([]);
@@ -24,8 +26,12 @@ const FriendsOnline = ({ setCurrentChat }) => {
   }, [friends, onlineUsers]);
 
   const handleClick = (user) => {
-    // getTwoUsersConv(user._id).then((conv) => setCurrentChat(conv));
+    startConversation(user._id).then((conv) =>
+      router.push(`/messenger?conv=${JSON.stringify(conv)}`)
+    );
   };
+
+  // console.log(JSON.parse(router.query.conv));
 
   return (
     <div className={styles.chatOnline}>

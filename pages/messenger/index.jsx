@@ -7,6 +7,7 @@ import styles from '../../styles/Messenger.module.scss';
 import { getConversations, getMessages, sendMessage } from '../../util/API';
 import SocketContext from '../../store/socketContext';
 import { Send } from '@mui/icons-material';
+import { Router, useRouter } from 'next/router';
 
 const MessengerPage = ({ user }) => {
   const [conversations, setConversations] = useState([]);
@@ -16,10 +17,17 @@ const MessengerPage = ({ user }) => {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const { socket } = useContext(SocketContext);
   const scrollRef = useRef();
+  const router = useRouter();
 
   useEffect(() => {
     //get all conversations
     getConversations().then((conv) => setConversations(conv));
+
+    if (router.query.conv) {
+      const conv = JSON.parse(router.query.conv);
+      setCurrentChat(conv);
+      router.replace('/messenger');
+    }
   }, []);
 
   useEffect(() => {

@@ -23,7 +23,7 @@ export const SocketProvider = ({ children }) => {
 
   return (
     <SocketContext.Provider
-      value={{ socket: socket.current, onlineUsers, userId: user._id }}
+      value={{ socket: socket.current, onlineUsers, userId: user?._id }}
     >
       {children}
     </SocketContext.Provider>

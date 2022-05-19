@@ -101,6 +101,15 @@ export const getConversations = async () => {
   }
 };
 
+export const startConversation = async (receiverId) => {
+  try {
+    const res = await axios.post(`/api/v1/conversation`, { receiverId });
+    return res.data.conversation;
+  } catch (err) {
+    console.error(err.response.data.message || err.response.data.data.message);
+  }
+};
+
 export const getTwoUsersConv = async (userId) => {
   try {
     const res = await axios.get(`/api/v1/conversation/find/${userId}`);
