@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { getComments } from '../../util/API';
 import CircularProgress from '@mui/material/CircularProgress';
 
-const Comments = ({ currentUser, post, show }) => {
+const Comments = ({ currentUser, post, show, desc, postAuthor }) => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -21,6 +21,8 @@ const Comments = ({ currentUser, post, show }) => {
         styles={styles}
         post={post}
         user={currentUser}
+        desc={desc}
+        receiver={postAuthor}
         setComments={setComments}
       />
       {loading && (

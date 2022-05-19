@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Users } from '../../util/DummyData';
 import Online from '../Online/Online';
+import FriendsOnline from '../FriendsOnline/FriendsOnline';
 import styles from './HomeRightbar.module.scss';
 
 const HomeRightbar = () => {
@@ -26,9 +27,10 @@ const HomeRightbar = () => {
       </div>
       <h4 className={styles.rightbarTitle}>Online Friends</h4>
       <ul className={styles.rightbarFriendList}>
-        {Users.map((u) => (
+        {/* {Users.map((u) => (
           <Online key={u.id} user={u} />
-        ))}
+        ))} */}
+        <FriendsOnline />
       </ul>
     </>
   );

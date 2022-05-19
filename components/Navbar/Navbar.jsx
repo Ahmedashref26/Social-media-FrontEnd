@@ -10,15 +10,19 @@ import { Menu, MenuItem, Typography } from '@mui/material';
 
 const Navbar = ({ user }) => {
   const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
-  const socket = useContext(SocketContext);
+  const { socket } = useContext(SocketContext);
   const [open, setOpen] = useState(false);
+  const [notifications, setNotifications] = useState([]);
   const [showNotification, setShowNotification] = useState(false);
 
-  // useEffect(() => {
-  //   socket.off('getNotification').on('getNotification', (notification) => {
-  //     console.log(notification);
-  //   });
-  // }, [socket]);
+  useEffect(() => {
+    socket &&
+      socket
+        .off('getNotification')
+        .on('getNotification', (notification) =>
+          setNotifications((prev) => [...prev, notification])
+        );
+  }, [socket]);
 
   return (
     <div className='navbar'>
@@ -39,7 +43,7 @@ const Navbar = ({ user }) => {
             <Link href='/messenger'>
               <div className={styles.navbarIconItem}>
                 <Chat />
-                <span className={styles.navbarIconBadge}>2</span>
+                {/* <span className={styles.navbarIconBadge}>2</span> */}
               </div>
             </Link>
             <div
@@ -47,7 +51,11 @@ const Navbar = ({ user }) => {
               className={styles.navbarIconItem}
             >
               <Notifications />
-              <span className={styles.navbarIconBadge}>1</span>
+              {notifications && notifications.length > 0 && (
+                <span className={styles.navbarIconBadge}>
+                  {notifications.length}
+                </span>
+              )}
             </div>
           </div>
           <div
@@ -113,9 +121,28 @@ const Navbar = ({ user }) => {
             open={!!showNotification}
             onClose={(e) => setShowNotification(false)}
           >
-            <MenuItem onClick={(e) => setShowNotification(false)}>
-              <div>Laura liked your post : asdlfjaslfadfj</div>
-            </MenuItem>
+            {notifications &&
+              notifications.length > 0 &&
+              notifications
+                .sort((a, b) => b.id - a.id)
+                .map((n, i) => (
+                  <MenuItem
+                    key={n.id}
+                    onClick={() =>
+                      setNotifications((noti) =>
+                        noti.filter((l, index) => i !== index)
+                      )
+                    }
+                  >
+                    <div>{n.msg}</div>
+                  </MenuItem>
+                ))}
+            {!notifications ||
+              (notifications.length === 0 && (
+                <MenuItem onClick={(e) => setShowNotification(false)}>
+                  <div>No Notifications</div>
+                </MenuItem>
+              ))}
           </Menu>
         </div>
       </div>

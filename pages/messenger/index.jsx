@@ -1,13 +1,10 @@
 import { getSession, useSession } from 'next-auth/react';
 import { useEffect, useRef, useState, useContext } from 'react';
-import ChatOnline from '../../components/ChatOnline/ChatOnline';
 import Conversation from '../../components/Conversation/Conversation';
 import Message from '../../components/Message/Message';
 import Navbar from '../../components/Navbar/Navbar';
 import styles from '../../styles/Messenger.module.scss';
-// import { io } from 'socket.io-client';
 import { getConversations, getMessages, sendMessage } from '../../util/API';
-// import { socket } from '../../util/socket';
 import SocketContext from '../../store/socketContext';
 import { Send } from '@mui/icons-material';
 
@@ -17,24 +14,21 @@ const MessengerPage = ({ user }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [onlineUsers, setOnlineUsers] = useState([]);
-  // const socket = useRef();
-  const socket = useContext(SocketContext);
+  const { socket } = useContext(SocketContext);
   const scrollRef = useRef();
 
   useEffect(() => {
-    console.log(socket);
-    // establish socket connection
-    // socket.current = io('ws://localhost:8900');
-    //get message from socket server
-    // socket.current.on('getMessage', (msg) => setArrivalMessage(msg));
-    socket.on('getMessage', (msg) => setArrivalMessage(msg));
-    socket.on('getUsers', (users) => {
-      setOnlineUsers(users);
-    });
     //get all conversations
     getConversations().then((conv) => setConversations(conv));
   }, []);
+
+  useEffect(() => {
+    //get message from socket server
+    socket &&
+      socket
+        .off('getMessage')
+        .on('getMessage', (msg) => setArrivalMessage(msg));
+  }, [socket]);
 
   useEffect(() => {
     arrivalMessage &&
@@ -43,15 +37,6 @@ const MessengerPage = ({ user }) => {
         .includes(arrivalMessage.sender._id) &&
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
-
-  // useEffect(() => {
-  //   // socket.current.emit('addUser', user._id);
-  //   // socket.current.on('getUsers', (users) => {
-  //   socket.emit('addUser', user._id);
-  //   socket.on('getUsers', (users) => {
-  //     setOnlineUsers(users);
-  //   });
-  // }, []);
 
   useEffect(() => {
     if (currentChat) {
@@ -76,8 +61,6 @@ const MessengerPage = ({ user }) => {
 
     sendMessage(message).then((msg) => {
       setMessages([...messages, msg]);
-      // send message to socket server
-      // socket.current.emit('sendMessage', {
       socket.emit('sendMessage', {
         ...msg,
         receiverId: receiver._id,

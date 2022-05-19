@@ -1,31 +1,35 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import SocketContext from '../../store/socketContext';
 import { getFriends, getTwoUsersConv } from '../../util/API';
-import styles from './ChatOnline.module.scss';
+import styles from './FriendsOnline.module.scss';
 
-const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
+const FriendsOnline = ({ setCurrentChat }) => {
   const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
+  const { onlineUsers, userId } = useContext(SocketContext);
 
   const [friends, setFriends] = useState([]);
   const [onlineFriends, setOnlineFriends] = useState([]);
 
   useEffect(() => {
-    if (currentId) getFriends(currentId).then((friends) => setFriends(friends));
-  }, [currentId]);
+    if (userId) getFriends(userId).then((friends) => setFriends(friends));
+  }, [userId]);
 
   useEffect(() => {
-    setOnlineFriends(
-      friends.filter((f) => onlineUsers.map((u) => u.userId).includes(f._id))
-    );
+    onlineUsers &&
+      onlineUsers.length &&
+      setOnlineFriends(
+        friends.filter((f) => onlineUsers.map((u) => u.userId).includes(f._id))
+      );
   }, [friends, onlineUsers]);
 
   const handleClick = (user) => {
-    getTwoUsersConv(user._id).then((conv) => setCurrentChat(conv));
+    // getTwoUsersConv(user._id).then((conv) => setCurrentChat(conv));
   };
 
   return (
     <div className={styles.chatOnline}>
-      {onlineFriends.map((o) => (
+      {friends.map((o) => (
         <div
           key={o._id}
           className={styles.chatOnlineFriend}
@@ -44,12 +48,14 @@ const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
                 height={200}
               />
             </div>
-            <div className={styles.chatOnlineBadge}></div>
+            {onlineFriends.indexOf(o) !== -1 && (
+              <div className={styles.chatOnlineBadge}></div>
+            )}
           </div>
-          <span className={styles.chatOnlineName}>{o?.username}</span>
+          <span className={styles.chatOnlineName}>{o?.name}</span>
         </div>
       ))}
     </div>
   );
 };
-export default ChatOnline;
+export default FriendsOnline;

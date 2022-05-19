@@ -1,8 +1,10 @@
 import Image from 'next/image';
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { addComment } from '../../util/API';
+import SocketContext from '../../store/socketContext';
 
-const NewComment = ({ styles, user, post, setComments }) => {
+const NewComment = ({ styles, user, post, setComments, receiver, desc }) => {
+  const { socket } = useContext(SocketContext);
   const commentInput = useRef();
   const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
 
@@ -14,6 +16,12 @@ const NewComment = ({ styles, user, post, setComments }) => {
     if (res) {
       setComments((pre) => [...pre, res]);
       commentInput.current.value = '';
+      socket.emit('sendNotification', {
+        sender: user.name,
+        receiver,
+        type: 'comment',
+        desc: desc.length > 20 ? `${desc.substring(0, 20)}...` : desc,
+      });
     }
   };
 
