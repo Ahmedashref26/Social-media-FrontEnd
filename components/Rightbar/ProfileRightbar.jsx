@@ -6,20 +6,25 @@ import Link from 'next/link';
 import { getSession, useSession } from 'next-auth/react';
 import { Add, Remove } from '@mui/icons-material';
 import { reloadSession } from '../../util/reload';
+import Alert from '../Alert/Alert';
 
 const ProfileRightbar = ({ user, currentUser }) => {
   const [friends, setFriends] = useState([]);
   const [followed, setFollowed] = useState(false);
+  const [message, setMessage] = useState();
 
   useEffect(() => {
-    console.log('check', currentUser.followings.includes(user?._id));
     setFollowed(currentUser.followings.includes(user?._id));
     if (user._id) getFriends(user._id).then((friends) => setFriends(friends));
   }, [user._id]);
 
-  console.log('followed', followed);
-  const handleFollow = (e) => {
-    followUser(user._id, followed ? 'unfollow' : 'follow');
+  const handleFollow = async (e) => {
+    setMessage(null);
+    const res = await followUser(user._id, followed ? 'unfollow' : 'follow');
+    if (res.error) {
+      setMessage({ status: 'error', msg: res.error });
+      return;
+    }
     setFollowed((pre) => !pre);
     reloadSession();
   };
@@ -27,6 +32,7 @@ const ProfileRightbar = ({ user, currentUser }) => {
   const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
   return (
     <>
+      {message && <Alert variant={message.status} msg={message.msg} />}
       {currentUser._id !== user._id && (
         <button onClick={handleFollow} className={styles.rightbarFollowButton}>
           {followed ? 'unfollow' : 'Follow'}

@@ -1,10 +1,10 @@
 import styles from '../../styles/Login.module.scss';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { getSession, signIn, useSession } from 'next-auth/react';
-import authContext from '../../store/authContext';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Alert from '../../components/Alert/Alert';
 
 const LoginPage = () => {
   const email = useRef();
@@ -16,6 +16,7 @@ const LoginPage = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
     const result = await signIn('credentials', {
       redirect: false,
       email: email.current.value,
@@ -33,11 +34,12 @@ const LoginPage = () => {
 
   return (
     <div className={styles.login}>
+      {error && <Alert variant='error' msg={error} />}
       <div className={styles.loginWrapper}>
         <div className={styles.loginLeft}>
-          <h3 className={styles.loginLogo}>HamadaSocial</h3>
+          <h3 className={styles.loginLogo}>GoSocial</h3>
           <span className={styles.loginDesc}>
-            Connect with friends and the world around you on HamadaSocial.
+            Connect with friends and the world around you on GoSocial.
           </span>
         </div>
         <div className={styles.loginRight}>
@@ -70,7 +72,8 @@ const LoginPage = () => {
                 Create a New Account
               </span>
             </Link>
-            {error && <div className={styles.loginError}>{error}</div>}
+
+            {/* {error && <div className={styles.loginError}>{error}</div>} */}
           </form>
         </div>
       </div>

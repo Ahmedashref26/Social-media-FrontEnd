@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import CircularProgress from '@mui/material/CircularProgress';
 import Link from 'next/link';
 import { signup } from '../../util/API';
+import Alert from '../../components/Alert/Alert';
 
 const SignupPage = () => {
   const email = useRef();
@@ -19,6 +20,7 @@ const SignupPage = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
 
     const enteredEmail = email.current.value;
     const enteredUsername = username.current.value;
@@ -39,9 +41,11 @@ const SignupPage = () => {
       password: enteredPass,
     });
 
-    if (signupResults.status === 'error' || signupResults.status === 'failed') {
+    if (signupResults.error) {
       setLoading(false);
-      setError('Something went wrong. Please try agian!');
+      setError(
+        signupResults.error || 'Something went wrong. Please try agian!'
+      );
       return;
     }
 
@@ -61,11 +65,12 @@ const SignupPage = () => {
   };
   return (
     <div className={styles.signup}>
+      {error && <Alert variant='error' msg={error} />}
       <div className={styles.signupWrapper}>
         <div className={styles.signupLeft}>
-          <h3 className={styles.signupLogo}>HamadaSocial</h3>
+          <h3 className={styles.signupLogo}>GoSocial</h3>
           <span className={styles.signupDesc}>
-            Connect with friends and the world around you on HamadaSocial.
+            Connect with friends and the world around you on GoSocial.
           </span>
         </div>
         <div className={styles.signupRight}>
@@ -118,7 +123,7 @@ const SignupPage = () => {
                 Log into Account
               </span>
             </Link>
-            {error && <div className={styles.signupError}>{error}</div>}
+            {/* {error && <div className={styles.signupError}>{error}</div>} */}
           </form>
         </div>
       </div>

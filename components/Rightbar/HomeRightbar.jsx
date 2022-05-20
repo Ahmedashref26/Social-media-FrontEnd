@@ -19,11 +19,11 @@ const HomeRightbar = () => {
           />
         </div>
         <span className={styles.birthdayText}>
-          <b>Pola Foster</b> and <b>3 other friends</b> have a birhday today.
+          <b>You</b> and <b>4 other friends</b> have a birhday today.
         </span>
       </div>
       <div className={styles.rightbarAd}>
-        <Image layout='fill' objectFit='cover' src={`${PF}/ad.png`} alt='' />
+        <Image layout='fill' objectFit='cover' src={`${PF}/ad.jpg`} alt='' />
       </div>
       <h4 className={styles.rightbarTitle}>Contacts</h4>
       <ul className={styles.rightbarFriendList}>

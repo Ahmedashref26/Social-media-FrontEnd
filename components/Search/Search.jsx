@@ -16,7 +16,8 @@ const Search = () => {
     if (q.trim().length === 0) setSearching(false);
 
     if (q.trim().length > 0) {
-      searchUsers(q, 8).then((data) => {
+      // searchUsers(q, 8).then((data) => {
+      searchUsers(q).then((data) => {
         setUsers(data.users);
         setMore(data.total > data.results);
       });

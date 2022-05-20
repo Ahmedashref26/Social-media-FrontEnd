@@ -5,6 +5,7 @@ const Alert = ({ variant, msg, time = 3 }) => {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
+    setShow(true);
     const timer = setTimeout(() => {
       setShow(false);
     }, time * 1000);

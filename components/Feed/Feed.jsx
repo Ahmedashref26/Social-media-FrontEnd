@@ -34,9 +34,15 @@ const Feed = ({ user }) => {
         {(!user || currentUser._id === user._id) && (
           <Share update={setUpdate} />
         )}
-        {posts.map((p) => (
-          <Post key={p._id} post={p} update={setUpdate} />
-        ))}
+        {posts &&
+          posts.length > 0 &&
+          posts.map((p) => <Post key={p._id} post={p} update={setUpdate} />)}
+        {posts.length === 0 && (
+          <div className={styles.feedNoPosts}>
+            There is no posts share your own posts or follow other users to see
+            there posts
+          </div>
+        )}
       </div>
     </div>
   );

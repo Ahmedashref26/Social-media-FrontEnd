@@ -8,15 +8,12 @@ const AuthOptions = (req, res) => ({
     CredentialsProvider({
       // name: 'Email',
       authorize: async (credentials) => {
-        const { data, cookies } = await login(credentials);
-
+        const result = await login(credentials);
+        if (result.error) throw new Error(result.error || 'User not found!');
+        const { data, cookies } = result;
         res.setHeader('Set-Cookie', cookies);
-
         if (data.status === 'success')
           return { ...data.user, token: data.token };
-
-        if (data.status === 'failed')
-          throw new Error(data.message || 'User not found!');
       },
     }),
   ],

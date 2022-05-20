@@ -25,13 +25,13 @@ const Navbar = ({ user }) => {
   }, [socket]);
 
   return (
-    <div className='navbar'>
+    <div className={styles.navbar}>
       <div className={styles.navbarContainer}>
         <div className={styles.navbarLeft}>
           <Link href='/'>
             <>
-              <span className={styles.navbarLeftLogo}>HamadaSocial</span>
-              <span className={styles.navbarLeftLogoImage}>HS</span>
+              <span className={styles.navbarLeftLogo}>GOSocial</span>
+              <span className={styles.navbarLeftLogoImage}>GO</span>
             </>
           </Link>
         </div>

@@ -1,6 +1,6 @@
 import styles from './post.module.scss';
 import { Cancel, MoreVert } from '@mui/icons-material';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { format } from 'timeago.js';
 import Link from 'next/link';
@@ -14,6 +14,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import InsertCommentOutlinedIcon from '@mui/icons-material/InsertCommentOutlined';
 import SocketContext from '../../store/socketContext';
+import Alert from '../Alert/Alert';
 
 export default function Post({ post, update }) {
   const [like, setLike] = useState(post.likes.length);
@@ -24,6 +25,7 @@ export default function Post({ post, update }) {
   const [file, setFile] = useState(post?.image);
   const [desc, setDesc] = useState(post?.description);
   const [showComment, setShowComment] = useState(false);
+  const [message, setMessage] = useState();
 
   const { socket } = useContext(SocketContext);
 
@@ -60,10 +62,12 @@ export default function Post({ post, update }) {
   const deleteHandler = async () => {
     setLoading(true);
     setAnchorEl(null);
+    setMessage(null);
     const res = await deletePost(post._id);
-    if (res) {
+    if (!res.error && res) {
       update((pre) => !pre);
     }
+    if (res.error) setMessage({ status: 'error', msg: res.error });
     setLoading(false);
   };
 
@@ -73,6 +77,8 @@ export default function Post({ post, update }) {
   };
 
   const updateHandler = async () => {
+    setMessage(null);
+    setLoading(true);
     const updatedPost = { description: desc };
 
     if (file && file !== post.image) {
@@ -85,11 +91,13 @@ export default function Post({ post, update }) {
     if (!updatedPost.image && post.image) updatedPost.image = post.image;
 
     const res = await updatePost(post._id, updatedPost);
-    if (res) {
+    if (!res.error && res) {
       setFile(null);
       setEditing(false);
       update((pre) => !pre);
     }
+    if (res.error) setMessage({ status: 'error', msg: res.error });
+    setLoading(false);
   };
 
   const handleClick = (e) => {
@@ -98,6 +106,7 @@ export default function Post({ post, update }) {
 
   return (
     <div className={styles.post}>
+      {message && <Alert variant={message.status} msg={message.msg} />}
       <div className={styles.postWrapper}>
         {loading && (
           <div className={styles.overlay}>

@@ -4,16 +4,24 @@ const url = 'http://localhost:8800/api/v1';
 // const url = '/api/v1';
 
 export const login = async (userCredentials) => {
-  const res = await axios.post(`${url}/users/login`, userCredentials);
-  const cookies = res.headers['set-cookie'];
-  const { data } = res;
-  return { data, cookies };
+  try {
+    const res = await axios.post(`${url}/users/login`, userCredentials);
+    const cookies = res.headers['set-cookie'];
+    const { data } = res;
+    return { data, cookies };
+  } catch (err) {
+    return { error: err.response.data.message || 'Something went wrong!' };
+  }
 };
 
 export const signup = async (userCredentials) => {
-  const res = await axios.post(`${url}/users/signup`, userCredentials);
-  const { data } = res;
-  return data;
+  try {
+    const res = await axios.post(`${url}/users/signup`, userCredentials);
+    const { data } = res;
+    return data;
+  } catch (err) {
+    return { error: err.response.data.message || 'Something went wrong!' };
+  }
 };
 
 export const getUser = async (user, by = 'userId') => {
@@ -21,7 +29,7 @@ export const getUser = async (user, by = 'userId') => {
     const res = await axios.get(`${url}/users?${by}=${user}`);
     return res.data;
   } catch (err) {
-    console.log(err.response.data.message);
+    return { error: err.response.data.message || 'Something went wrong!' };
   }
 };
 
@@ -61,21 +69,21 @@ export const addPost = async (post) => {
 };
 
 export const deletePost = async (postId) => {
-  const res = await axios.delete(`/api/v1/posts/${postId}`);
-  if (res.data?.status === 'failed' || res.data?.status === 'error') {
-    console.log(res.data.message);
-    return false;
+  try {
+    await axios.delete(`/api/v1/posts/${postId}`);
+    return true;
+  } catch (err) {
+    return { error: err.response.data.message || 'Something went wrong!' };
   }
-  return true;
 };
 
 export const updatePost = async (postId, updatedPost) => {
-  const res = await axios.put(`/api/v1/posts/${postId}`, updatedPost);
-  if (res.data?.status === 'failed' || res.data?.status === 'error') {
-    console.log(res.data.message);
-    return false;
+  try {
+    await axios.put(`/api/v1/posts/${postId}`, updatedPost);
+    return true;
+  } catch (err) {
+    return { error: err.response.data.message || 'Something went wrong!' };
   }
-  return true;
 };
 
 export const getFriends = async (id) => {
@@ -88,7 +96,12 @@ export const followUser = async (id, action) => {
     const res = await axios.put(`/api/v1/users/${id}/${action}`);
     return res.data.message;
   } catch (err) {
-    console.error(err.response.data.message || err.response.data.data.message);
+    return {
+      error:
+        err.response.data.message ||
+        err.response.data.data.message ||
+        'Something went wrong!',
+    };
   }
 };
 
