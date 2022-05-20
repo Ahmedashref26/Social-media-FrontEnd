@@ -57,7 +57,7 @@ const ProfilePage = ({ user: currentUser }) => {
           </div>
           <div className={styles.profileRightBottom}>
             <Feed user={user} />
-            <Rightbar user={user} />
+            <Rightbar currentUser={currentUser} user={user} />
           </div>
         </div>
       </div>

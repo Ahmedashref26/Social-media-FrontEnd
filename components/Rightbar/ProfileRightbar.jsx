@@ -7,21 +7,17 @@ import { getSession, useSession } from 'next-auth/react';
 import { Add, Remove } from '@mui/icons-material';
 import { reloadSession } from '../../util/reload';
 
-const ProfileRightbar = ({ user }) => {
+const ProfileRightbar = ({ user, currentUser }) => {
   const [friends, setFriends] = useState([]);
   const [followed, setFollowed] = useState(false);
-  const {
-    data: { user: currentUser },
-  } = useSession();
 
   useEffect(() => {
+    console.log('check', currentUser.followings.includes(user?._id));
     setFollowed(currentUser.followings.includes(user?._id));
-  }, []);
-
-  useEffect(() => {
     if (user._id) getFriends(user._id).then((friends) => setFriends(friends));
   }, [user._id]);
 
+  console.log('followed', followed);
   const handleFollow = (e) => {
     followUser(user._id, followed ? 'unfollow' : 'follow');
     setFollowed((pre) => !pre);
@@ -58,7 +54,7 @@ const ProfileRightbar = ({ user }) => {
           </span>
         </div>
       </div>
-      <h4 className={styles.rightbarTitle}>User friends</h4>
+      <h4 className={styles.rightbarTitle}>Following Users</h4>
       <div className={styles.rightbarFollowings}>
         {friends &&
           friends.length > 0 &&

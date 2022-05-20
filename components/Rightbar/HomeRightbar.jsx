@@ -25,7 +25,7 @@ const HomeRightbar = () => {
       <div className={styles.rightbarAd}>
         <Image layout='fill' objectFit='cover' src={`${PF}/ad.png`} alt='' />
       </div>
-      <h4 className={styles.rightbarTitle}>Online Friends</h4>
+      <h4 className={styles.rightbarTitle}>Contacts</h4>
       <ul className={styles.rightbarFriendList}>
         {/* {Users.map((u) => (
           <Online key={u.id} user={u} />
