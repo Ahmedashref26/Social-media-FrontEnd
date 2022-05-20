@@ -29,10 +29,10 @@ const Navbar = ({ user }) => {
       <div className={styles.navbarContainer}>
         <div className={styles.navbarLeft}>
           <Link href='/'>
-            <>
+            <a>
               <span className={styles.navbarLeftLogo}>GOSocial</span>
               <span className={styles.navbarLeftLogoImage}>GO</span>
-            </>
+            </a>
           </Link>
         </div>
         <div className={styles.navbarCenter}>
