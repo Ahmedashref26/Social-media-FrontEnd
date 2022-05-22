@@ -34,7 +34,6 @@ module.exports = (phase, { defaultConfig }) => {
     reactStrictMode: true,
     env: {
       JWT_SECRET: 'the-awosome-and-most-secure-web-token-secret',
-      NEXTAUTH_URL: 'http://localhost:3000/',
       API_URL: 'https://api-gosocial.herokuapp.com',
       PUBLIC_FOLDER: 'https://api-gosocial.herokuapp.com/images',
     },
