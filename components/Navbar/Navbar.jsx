@@ -9,7 +9,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Menu, MenuItem, Typography } from '@mui/material';
 
 const Navbar = ({ user }) => {
-  const PF = process.env.PUBLIC_FOLDER;
+  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
   const { socket } = useContext(SocketContext);
   const [open, setOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);

@@ -16,7 +16,7 @@ const Share = ({ update }) => {
   const { data: session } = useSession();
   const user = session?.user;
   const [file, setFile] = useState();
-  const PF = process.env.PUBLIC_FOLDER;
+  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
 
   const desc = useRef();
 

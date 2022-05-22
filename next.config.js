@@ -6,12 +6,6 @@ module.exports = (phase, { defaultConfig }) => {
   if (phase === PHASE_DEVELOPMENT_SERVER) {
     return {
       reactStrictMode: true,
-      env: {
-        JWT_SECRET: 'the-awosome-and-most-secure-web-token-secret',
-        NEXTAUTH_URL: 'http://localhost:3000/',
-        API_URL: 'http://localhost:8800',
-        PUBLIC_FOLDER: 'http://localhost:8800/images',
-      },
       sassOptions: {
         includePaths: [path.join(__dirname, 'styles')],
         prependData: `@import "_variables.scss";`,
@@ -32,11 +26,6 @@ module.exports = (phase, { defaultConfig }) => {
 
   return {
     reactStrictMode: true,
-    env: {
-      JWT_SECRET: 'the-awosome-and-most-secure-web-token-secret',
-      API_URL: 'https://api-gosocial.herokuapp.com',
-      PUBLIC_FOLDER: 'https://api-gosocial.herokuapp.com/images',
-    },
     sassOptions: {
       includePaths: [path.join(__dirname, 'styles')],
       prependData: `@import "_variables.scss";`,

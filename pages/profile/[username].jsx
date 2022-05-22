@@ -14,7 +14,7 @@ const ProfilePage = ({ user: currentUser }) => {
   const [user, setUser] = useState({});
   const router = useRouter();
   const { username } = router.query;
-  const PF = process.env.PUBLIC_FOLDER;
+  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
 
   useEffect(() => {
     getUser(username, 'username')

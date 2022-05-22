@@ -6,7 +6,7 @@ import SocketContext from '../../store/socketContext';
 const NewComment = ({ styles, user, post, setComments, receiver, desc }) => {
   const { socket } = useContext(SocketContext);
   const commentInput = useRef();
-  const PF = process.env.PUBLIC_FOLDER;
+  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
 
   const submitHandler = async (e) => {
     e.preventDefault();

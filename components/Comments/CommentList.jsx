@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { format } from 'timeago.js';
 
 const CommentList = ({ styles, comments }) => {
-  const PF = process.env.PUBLIC_FOLDER;
+  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
 
   return (
     <div className={styles.commentList}>

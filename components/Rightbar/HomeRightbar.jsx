@@ -5,7 +5,7 @@ import FriendsOnline from '../FriendsOnline/FriendsOnline';
 import styles from './HomeRightbar.module.scss';
 
 const HomeRightbar = () => {
-  const PF = process.env.PUBLIC_FOLDER;
+  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
 
   return (
     <>

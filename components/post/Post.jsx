@@ -30,7 +30,7 @@ export default function Post({ post, update }) {
   const { socket } = useContext(SocketContext);
 
   const open = Boolean(anchorEl);
-  const PF = process.env.PUBLIC_FOLDER;
+  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
 
   const { data } = useSession();
   const currentUser = data?.user;

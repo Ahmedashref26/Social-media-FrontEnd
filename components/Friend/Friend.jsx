@@ -2,7 +2,7 @@ import styles from './Friend.module.scss';
 import Image from 'next/image';
 
 export default function Friend({ user }) {
-  const PF = process.env.PUBLIC_FOLDER;
+  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
 
   return (
     <li className={styles.sidebarFriend}>
