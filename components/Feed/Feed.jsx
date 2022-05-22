@@ -9,9 +9,8 @@ const Feed = ({ user }) => {
   const [posts, setPosts] = useState([]);
   const [update, setUpdate] = useState(false);
 
-  const {
-    data: { user: currentUser },
-  } = useSession();
+  const { data } = useSession();
+  const currentUser = data?.user;
 
   useEffect(() => {
     if (user?._id)
@@ -31,7 +30,7 @@ const Feed = ({ user }) => {
   return (
     <div className={styles.feed}>
       <div className={styles.feedWrapper}>
-        {(!user || currentUser._id === user._id) && (
+        {(!user || currentUser?._id === user._id) && (
           <Share update={setUpdate} />
         )}
         {posts &&

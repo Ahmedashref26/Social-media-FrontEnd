@@ -2,7 +2,7 @@ import styles from './online.module.scss';
 import Image from 'next/image';
 
 const Online = ({ user }) => {
-  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
+  const PF = process.env.PUBLIC_FOLDER;
 
   return (
     <li className={styles.rightbarFriend}>

@@ -1,22 +1,32 @@
 import axios from 'axios';
 
-const url = 'http://localhost:8800/api/v1';
+const axiosInstance = axios.create({
+  // baseURL: `${process.env.API_URL}/api/v1/`,
+  baseURL: `/api/v1/`,
+  withCredentials: true,
+});
+
+const url = 'http://localhost:8800/api/v1/';
 // const url = '/api/v1';
 
 export const login = async (userCredentials) => {
   try {
-    const res = await axios.post(`${url}/users/login`, userCredentials);
+    const res = await axios.post(
+      `${process.env.API_URL}/api/v1/users/login`,
+      userCredentials
+    );
     const cookies = res.headers['set-cookie'];
     const { data } = res;
     return { data, cookies };
   } catch (err) {
+    console.log(err);
     return { error: err.response.data.message || 'Something went wrong!' };
   }
 };
 
 export const signup = async (userCredentials) => {
   try {
-    const res = await axios.post(`${url}/users/signup`, userCredentials);
+    const res = await axiosInstance.post(`/users/signup`, userCredentials);
     const { data } = res;
     return data;
   } catch (err) {
@@ -26,7 +36,9 @@ export const signup = async (userCredentials) => {
 
 export const getUser = async (user, by = 'userId') => {
   try {
-    const res = await axios.get(`${url}/users?${by}=${user}`);
+    const res = await axios.get(
+      `${process.env.API_URL}/api/v1/users?${by}=${user}`
+    );
     return res.data;
   } catch (err) {
     return { error: err.response.data.message || 'Something went wrong!' };
@@ -35,7 +47,7 @@ export const getUser = async (user, by = 'userId') => {
 
 export const searchUsers = async (q, limit = 0) => {
   try {
-    const res = await axios.get(`${url}/users/search?q=${q}&limit=${limit}`);
+    const res = await axiosInstance.get(`/users/search?q=${q}&limit=${limit}`);
     return res.data;
   } catch (err) {
     console.log(err.response.data.message);
@@ -43,34 +55,34 @@ export const searchUsers = async (q, limit = 0) => {
 };
 
 export const getUserTimeline = async () => {
-  const res = await axios.get(`/api/v1/posts/timeline`, {
+  const res = await axiosInstance.get(`/posts/timeline`, {
     withCredentials: true,
   });
   return res.data.posts;
 };
 
 export const getUserPosts = async (id) => {
-  const res = await axios.get(`/api/v1/posts/profile/${id}`);
+  const res = await axiosInstance.get(`/posts/profile/${id}`);
   return res.data.posts;
 };
 
 export const likePost = async (postId, userId) => {
-  const res = await axios.put(`/api/v1/posts/${postId}/like`, { userId });
+  const res = await axiosInstance.put(`/posts/${postId}/like`, { userId });
 };
 
 export const uploadFile = async (data) => {
-  const res = await axios.post('/api/v1/upload', data);
+  const res = await axiosInstance.post('/upload', data);
   return res.data?.status === 'success' ? res.data.filename : null;
 };
 
 export const addPost = async (post) => {
-  const res = await axios.post('/api/v1/posts', post);
+  const res = await axiosInstance.post('/posts', post);
   return res.data.post;
 };
 
 export const deletePost = async (postId) => {
   try {
-    await axios.delete(`/api/v1/posts/${postId}`);
+    await axiosInstance.delete(`/posts/${postId}`);
     return true;
   } catch (err) {
     return { error: err.response.data.message || 'Something went wrong!' };
@@ -79,7 +91,7 @@ export const deletePost = async (postId) => {
 
 export const updatePost = async (postId, updatedPost) => {
   try {
-    await axios.put(`/api/v1/posts/${postId}`, updatedPost);
+    await axiosInstance.put(`/posts/${postId}`, updatedPost);
     return true;
   } catch (err) {
     return { error: err.response.data.message || 'Something went wrong!' };
@@ -87,13 +99,13 @@ export const updatePost = async (postId, updatedPost) => {
 };
 
 export const getFriends = async (id) => {
-  const res = await axios.get(`/api/v1/users/friends/${id}`);
+  const res = await axiosInstance.get(`/users/friends/${id}`);
   return res.data.friends;
 };
 
 export const followUser = async (id, action) => {
   try {
-    const res = await axios.put(`/api/v1/users/${id}/${action}`);
+    const res = await axiosInstance.put(`/users/${id}/${action}`);
     return res.data.message;
   } catch (err) {
     return {
@@ -107,7 +119,7 @@ export const followUser = async (id, action) => {
 
 export const getConversations = async () => {
   try {
-    const res = await axios.get(`/api/v1/conversation`);
+    const res = await axiosInstance.get(`/conversation`);
     return res.data.conversation;
   } catch (err) {
     console.error(err.response.data.message || err.response.data.data.message);
@@ -116,7 +128,7 @@ export const getConversations = async () => {
 
 export const startConversation = async (receiverId) => {
   try {
-    const res = await axios.post(`/api/v1/conversation`, { receiverId });
+    const res = await axiosInstance.post(`/conversation`, { receiverId });
     return res.data.conversation;
   } catch (err) {
     console.error(err.response.data.message || err.response.data.data.message);
@@ -125,7 +137,7 @@ export const startConversation = async (receiverId) => {
 
 export const getTwoUsersConv = async (userId) => {
   try {
-    const res = await axios.get(`/api/v1/conversation/find/${userId}`);
+    const res = await axiosInstance.get(`/conversation/find/${userId}`);
     return res.data.conversation;
   } catch (err) {
     console.error(err.response.data.message || err.response.data.data.message);
@@ -134,7 +146,7 @@ export const getTwoUsersConv = async (userId) => {
 
 export const getMessages = async (id) => {
   try {
-    const res = await axios.get(`/api/v1/conversation/${id}/messages`);
+    const res = await axiosInstance.get(`/conversation/${id}/messages`);
     return res.data.messages;
   } catch (err) {
     console.log(err);
@@ -145,7 +157,7 @@ export const getMessages = async (id) => {
 
 export const sendMessage = async (msg) => {
   try {
-    const res = await axios.post(`/api/v1/conversation/messages`, msg);
+    const res = await axiosInstance.post(`/conversation/messages`, msg);
     return res.data.message;
   } catch (err) {
     console.error(err.response.data.message || err.response.data.data.message);
@@ -154,7 +166,7 @@ export const sendMessage = async (msg) => {
 
 export const addComment = async (postId, comment) => {
   try {
-    const res = await axios.post(`/api/v1/posts/${postId}/comments`, comment);
+    const res = await axiosInstance.post(`/posts/${postId}/comments`, comment);
     if (res.data.status === 'success') return res.data.comment;
     if (res.data.status === 'failed' || res.data.status === 'error')
       return null;
@@ -165,7 +177,7 @@ export const addComment = async (postId, comment) => {
 
 export const getComments = async (postId) => {
   try {
-    const res = await axios.get(`/api/v1/posts/${postId}/comments`);
+    const res = await axiosInstance.get(`/posts/${postId}/comments`);
     if (res.data.status === 'success') return res.data.comments;
     if (res.data.status === 'failed' || res.data.status === 'error')
       return null;
@@ -176,7 +188,7 @@ export const getComments = async (postId) => {
 
 export const updateInfo = async (updatedInfo) => {
   try {
-    const res = await axios.put(`/api/v1/users/updateMe`, updatedInfo);
+    const res = await axiosInstance.put(`/users/updateMe`, updatedInfo);
     if (res.data.status === 'success')
       return {
         status: 'success',
@@ -199,7 +211,7 @@ export const updateInfo = async (updatedInfo) => {
 
 export const updatePass = async (updatedPass) => {
   try {
-    const res = await axios.put(`/api/v1/users/updateMyPassword`, updatedPass);
+    const res = await axiosInstance.put(`/users/updateMyPassword`, updatedPass);
     if (res.data.status === 'success')
       return {
         status: 'success',

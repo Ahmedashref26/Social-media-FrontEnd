@@ -6,7 +6,7 @@ import { getFriends, getTwoUsersConv, startConversation } from '../../util/API';
 import styles from './FriendsOnline.module.scss';
 
 const FriendsOnline = () => {
-  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
+  const PF = process.env.PUBLIC_FOLDER;
   const { onlineUsers, userId } = useContext(SocketContext);
   const router = useRouter();
 

@@ -29,7 +29,7 @@ const ProfileRightbar = ({ user, currentUser }) => {
     reloadSession();
   };
 
-  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
+  const PF = process.env.PUBLIC_FOLDER;
   return (
     <>
       {message && <Alert variant={message.status} msg={message.msg} />}

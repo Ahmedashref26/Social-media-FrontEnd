@@ -8,12 +8,13 @@ import { useEffect, useState } from 'react';
 import { getUser } from '../../util/API';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
+import Head from 'next/head';
 
 const ProfilePage = ({ user: currentUser }) => {
   const [user, setUser] = useState({});
   const router = useRouter();
   const { username } = router.query;
-  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
+  const PF = process.env.PUBLIC_FOLDER;
 
   useEffect(() => {
     getUser(username, 'username')
@@ -23,6 +24,9 @@ const ProfilePage = ({ user: currentUser }) => {
 
   return (
     <>
+      <Head>
+        <title>Go Social | Profile</title>
+      </Head>
       <Navbar user={currentUser} />
       <div className={styles.profile}>
         <Sidebar user={currentUser} />

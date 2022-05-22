@@ -8,6 +8,7 @@ import { getConversations, getMessages, sendMessage } from '../../util/API';
 import SocketContext from '../../store/socketContext';
 import { Send } from '@mui/icons-material';
 import { Router, useRouter } from 'next/router';
+import Head from 'next/head';
 
 const MessengerPage = ({ user }) => {
   const [conversations, setConversations] = useState([]);
@@ -78,6 +79,9 @@ const MessengerPage = ({ user }) => {
   };
   return (
     <>
+      <Head>
+        <title>Go Social | Messenger</title>
+      </Head>
       <Navbar user={user} />
       <div className={styles.messenger}>
         <div className={styles.chatMenu}>

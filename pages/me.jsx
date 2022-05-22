@@ -2,10 +2,14 @@ import styles from '../styles/me.module.scss';
 import Navbar from '../components/Navbar/Navbar';
 import { getSession } from 'next-auth/react';
 import ProfileSetting from '../components/ProfileSetting/profileSetting';
+import Head from 'next/head';
 
 const settingPage = ({ user }) => {
   return (
     <>
+      <Head>
+        <title>Go Social | Account Setting</title>
+      </Head>
       <Navbar user={user} />
       <ProfileSetting styles={styles} />
     </>

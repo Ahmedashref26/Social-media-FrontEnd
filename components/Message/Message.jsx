@@ -3,7 +3,7 @@ import { format } from 'timeago.js';
 import Image from 'next/image';
 
 export default function Message({ message, own }) {
-  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
+  const PF = process.env.PUBLIC_FOLDER;
   return (
     <div
       className={own ? `${styles.message} ${styles.own}` : `${styles.message}`}

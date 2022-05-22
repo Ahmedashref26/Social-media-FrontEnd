@@ -12,7 +12,7 @@ const AuthOptions = (req, res) => ({
         if (result.error) throw new Error(result.error || 'User not found!');
         const { data, cookies } = result;
         res.setHeader('Set-Cookie', cookies);
-        if (data.status === 'success')
+        if (data?.status === 'success')
           return { ...data.user, token: data.token };
       },
     }),

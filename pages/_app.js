@@ -7,10 +7,10 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <>
       <Head>
-        <title>Social App</title>
+        <title>Go Social</title>
         <meta
           name='description'
-          content='Social media app cloning facebook build with NextJS NodeJs Express and MongoDB'
+          content='GoSocial is a Social media app cloning facebook build with NextJS NodeJs Express and MongoDB'
         />
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>

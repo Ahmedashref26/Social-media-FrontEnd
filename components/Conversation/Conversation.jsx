@@ -2,7 +2,7 @@ import Image from 'next/image';
 import styles from './Conversation.module.scss';
 
 const Conversation = ({ conversation, currentUser }) => {
-  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
+  const PF = process.env.PUBLIC_FOLDER;
 
   const friend = conversation.members.find(
     (member) => member._id !== currentUser._id

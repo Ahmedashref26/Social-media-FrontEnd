@@ -14,9 +14,9 @@ import { addPost, uploadFile } from '../../util/API';
 
 const Share = ({ update }) => {
   const { data: session } = useSession();
-  const { user } = session;
+  const user = session?.user;
   const [file, setFile] = useState();
-  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
+  const PF = process.env.PUBLIC_FOLDER;
 
   const desc = useRef();
 
@@ -49,7 +49,7 @@ const Share = ({ update }) => {
               layout='fill'
               objectFit='cover'
               src={
-                user.profilePicture
+                user?.profilePicture
                   ? `${PF}/${user.profilePicture}`
                   : `${PF}/noAvatar.webp`
               }
@@ -57,7 +57,7 @@ const Share = ({ update }) => {
             />
           </div>
           <input
-            placeholder={`What's in your mind ${user.name}?`}
+            placeholder={`What's in your mind ${user?.name}?`}
             className={styles.shareInput}
             ref={desc}
           />

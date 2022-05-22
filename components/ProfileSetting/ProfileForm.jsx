@@ -14,7 +14,7 @@ const ProfileForm = ({ styles }) => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
-  const PF = process.env.NEXT_PUBLIC_PUBLIC_FOLDER;
+  const PF = process.env.PUBLIC_FOLDER;
 
   const submitHandler = async (e) => {
     e.preventDefault();

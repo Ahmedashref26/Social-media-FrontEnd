@@ -4,10 +4,14 @@ import Rightbar from '../components/Rightbar/Rightbar';
 import Sidebar from '../components/Sidebar/Sidebar';
 import Styles from '../styles/Home.module.scss';
 import { getSession } from 'next-auth/react';
+import Head from 'next/head';
 
 const HomePage = ({ user }) => {
   return (
     <>
+      <Head>
+        <title>Go Social | NewsFeed</title>
+      </Head>
       <Navbar user={user} />
       <div className={Styles.homeContainer}>
         <Sidebar user={user} />
