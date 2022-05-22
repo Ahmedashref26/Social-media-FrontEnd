@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  // baseURL: `${process.env.API_URL}/api/v1/`,
+  // baseURL: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/`,
   baseURL: `/api/v1/`,
   withCredentials: true,
 });
@@ -12,7 +12,7 @@ const url = 'http://localhost:8800/api/v1/';
 export const login = async (userCredentials) => {
   try {
     const res = await axios.post(
-      `${process.env.API_URL}/api/v1/users/login`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/login`,
       userCredentials
     );
     const cookies = res.headers['set-cookie'];
@@ -37,7 +37,7 @@ export const signup = async (userCredentials) => {
 export const getUser = async (user, by = 'userId') => {
   try {
     const res = await axios.get(
-      `${process.env.API_URL}/api/v1/users?${by}=${user}`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users?${by}=${user}`
     );
     return res.data;
   } catch (err) {
