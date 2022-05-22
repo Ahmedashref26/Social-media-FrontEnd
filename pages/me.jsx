@@ -1,7 +1,7 @@
 import styles from '../styles/me.module.scss';
 import Navbar from '../components/Navbar/Navbar';
 import { getSession } from 'next-auth/react';
-import ProfileSetting from '../components/ProfileSetting/profileSetting';
+import ProfileSetting from '../components/ProfileSetting/ProfileSetting';
 import Head from 'next/head';
 
 const settingPage = ({ user }) => {
