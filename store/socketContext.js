@@ -11,7 +11,7 @@ export const SocketProvider = ({ children }) => {
   const [onlineUsers, setOnlineUsers] = useState([]);
 
   useEffect(() => {
-    socket.current = io(process.env.API_URL);
+    socket.current = io(process.env.NEXT_PUBLIC_API_URL);
     // socket.current = io('ws://localhost:8900');
   }, []);
 
